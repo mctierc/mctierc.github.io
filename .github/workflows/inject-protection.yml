@@ -1,0 +1,53 @@
+name: Inject Protection
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  inject:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Inject protection
+        run: |
+          cat << 'EOF' > /tmp/protection.txt
+          <script>
+          document.addEventListener("contextmenu",function(e){e.preventDefault()});
+          document.addEventListener("keydown",function(e){
+            if(e.key==="F12"||e.keyCode===123||(e.ctrlKey&&(e.key==="u"||e.keyCode===85))||(e.ctrlKey&&e.shiftKey&&(e.key==="I"||e.keyCode===73))||(e.ctrlKey&&e.shiftKey&&(e.key==="J"||e.keyCode===74))||(e.ctrlKey&&(e.key==="s"||e.keyCode===83))){e.preventDefault()}
+          });
+          document.addEventListener("selectstart",function(e){
+            if(e.target.tagName!=="INPUT"&&e.target.tagName!=="TEXTAREA")e.preventDefault()
+          });
+          document.addEventListener("dragstart",function(e){e.preventDefault()});
+          document.addEventListener("copy",function(e){
+            if(e.target.tagName!=="INPUT"&&e.target.tagName!=="TEXTAREA")e.preventDefault()
+          });
+          </script>
+          <style>body{-webkit-user-select:none;user-select:none}</style>
+          EOF
+
+          PROTECTION_CODE=$(cat /tmp/protection.txt)
+
+          for f in $(find . -name "*.html"); do
+            if ! grep -q "data-protection-injected" "$f"; then
+              awk -v code="$PROTECTION_CODE" '/<head>/ {print; print code; print "<!-- data-protection-injected -->"; next} {print}' "$f" > "$f.tmp" && mv "$f.tmp" "$f"
+              echo "✓ 已注入: $f"
+            else
+              echo "跳过: $f"
+            fi
+          done
+
+      - name: Push
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@users.noreply.github.com"
+          git add .
+          git diff --cached --quiet || git commit -m "add protection [skip ci]"
+          git push
