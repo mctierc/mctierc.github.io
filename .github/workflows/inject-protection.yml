@@ -1,4 +1,3 @@
-yaml
 name: Inject Protection
 
 on:
@@ -15,9 +14,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Inject protection
+      - name: Inject protection script
         run: |
-          cat << 'EOF' > /tmp/protection.txt
+          # 创建保护代码文件
+          cat > /tmp/protection.html << 'EOF'
           <script>
           document.addEventListener("contextmenu",function(e){e.preventDefault()});
           document.addEventListener("keydown",function(e){
@@ -33,22 +33,38 @@ jobs:
           </script>
           <style>body{-webkit-user-select:none;user-select:none}</style>
           EOF
-
-          PROTECTION_CODE=$(cat /tmp/protection.txt)
-
-          for f in $(find . -name "*.html"); do
-            if ! grep -q "data-protection-injected" "$f"; then
-              awk -v code="$PROTECTION_CODE" '/<head>/ {print; print code; print "<!-- data-protection-injected -->"; next} {print}' "$f" > "$f.tmp" && mv "$f.tmp" "$f"
-              echo "✓ 已注入: $f"
-            else
-              echo "跳过: $f"
+          
+          PROTECTION=$(cat /tmp/protection.html)
+          
+          # 处理HTML文件
+          find . -name "*.html" -type f | while read -r file; do
+            if grep -q "data-protection-injected" "$file"; then
+              echo "跳过已注入: $file"
+              continue
             fi
+            
+            echo "注入: $file"
+            # 使用awk插入代码
+            awk -v p="$PROTECTION" '
+              /<head>/ {
+                print
+                print p
+                print "<!-- data-protection-injected -->"
+                next
+              }
+              {print}
+            ' "$file" > "$file.tmp"
+            mv "$file.tmp" "$file"
           done
 
-      - name: Push
+      - name: Commit and push
         run: |
-          git config user.name "github-actions"
-          git config user.email "actions@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .
-          git diff --cached --quiet || git commit -m "add protection [skip ci]"
-          git push
+          if git diff --cached --quiet; then
+            echo "没有更改需要提交"
+          else
+            git commit -m "chore: inject protection scripts [skip ci]"
+            git push
+          fi
