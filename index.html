@@ -1,6 +1,21 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+<script>
+document.addEventListener("contextmenu",function(e){e.preventDefault()});
+document.addEventListener("keydown",function(e){
+  if(e.key==="F12"||e.keyCode===123||(e.ctrlKey&&(e.key==="u"||e.keyCode===85))||(e.ctrlKey&&e.shiftKey&&(e.key==="I"||e.keyCode===73))||(e.ctrlKey&&e.shiftKey&&(e.key==="J"||e.keyCode===74))||(e.ctrlKey&&(e.key==="s"||e.keyCode===83))){e.preventDefault()}
+});
+document.addEventListener("selectstart",function(e){
+  if(e.target.tagName!=="INPUT"&&e.target.tagName!=="TEXTAREA")e.preventDefault()
+});
+document.addEventListener("dragstart",function(e){e.preventDefault()});
+document.addEventListener("copy",function(e){
+  if(e.target.tagName!=="INPUT"&&e.target.tagName!=="TEXTAREA")e.preventDefault()
+});
+</script>
+<style>body{-webkit-user-select:none;user-select:none}</style>
+<!-- data-protection-injected -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MCTierc · PVP 段位排行榜</title>
