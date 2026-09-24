@@ -183,8 +183,8 @@ const PLAYERS_DATA = [
     },
     {
         id: "",
-        name: "",
-        modes: { "Sword": "", "Axe": "", "Mace": "", "Vanilla": "", "NethPot": "", "NoDebuff": "", "UHC": "", "SMP": "", "BedWars": "" }
+        name: "betier.ccwu.cc",
+        modes: { "Sword": "S+", "Axe": "S+", "Mace": "S+", "Vanilla": "S+", "NethPot": "S+", "NoDebuff": "S+", "UHC": "S+", "SMP": "S+", "BedWars": "" }
     },
     {
         id: "",
