@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCTierc · 关于</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <script src="data.js?v=20241108e"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0a0b0e;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: #e8edf5;
+            min-height: 100vh;
+            padding: 24px;
+        }
+        .wrap { max-width: 900px; margin: 0 auto; }
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            margin-bottom: 24px;
+        }
+        .topbar a {
+            color: #8ab4ff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .topbar a:hover { color: #d0d8e8; }
+        .topbar .title {
+            font-weight: 700;
+            font-size: 18px;
+            background: linear-gradient(135deg, #70a8ff, #9966ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .section {
+            background: #14171c;
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            padding: 24px 28px;
+            margin-bottom: 20px;
+        }
+        .section h2 {
+            font-size: 20px;
+            margin-bottom: 14px;
+            background: linear-gradient(135deg, #70a8ff, #9966ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .section p {
+            font-size: 13px;
+            color: #8899bb;
+            line-height: 1.8;
+            margin-bottom: 12px;
+        }
+        .score-rules {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 4px;
+            background: #0d0f14;
+            border-radius: 8px;
+            padding: 8px 6px;
+        }
+        .score-rules .rule-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 10px;
+            font-weight: 600;
+            font-size: 13px;
+            color: #d0d8e8;
+        }
+        .score-rules .rule-item .level { color: #8ab4ff; }
+        .title-badge {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 10px;
+            border-radius: 4px;
+            border: 1px solid transparent;
+            white-space: nowrap;
+        }
+        .title-grandmaster { background: linear-gradient(135deg, #ffd700, #f5a623); color: #3d2b00; border-color: #ffd700; }
+        .title-master { background: linear-gradient(135deg, #ffe066, #ffcc00); color: #3d2b00; border-color: #ffcc00; }
+        .title-ace { background: linear-gradient(135deg, #ff5555, #cc0000); color: #ffffff; border-color: #cc0000; }
+        .title-specialist { background: linear-gradient(135deg, #c9a0ff, #9966ff); color: #2a1a4a; border-color: #9966ff; }
+        .title-cadet { background: linear-gradient(135deg, #a0d8ff, #66b3ff); color: #0a2a4a; border-color: #66b3ff; }
+        .title-novice { background: #6a7a9a; color: #ffffff; border-color: #5a6a8a; }
+        .title-rookie { background: #e8edf5; color: #2a2a2a; border-color: #d0d8e8; }
+        .contact-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px 14px;
+            background: #0d0f14;
+            border-radius: 8px;
+            padding: 10px 14px;
+        }
+        .contact-info .contact-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 2px 0;
+            font-size: 13px;
+        }
+        .contact-info .contact-item .label { color: #6a7a9a; }
+        .contact-info .contact-item .value { font-weight: 500; color: #d0d8e8; }
+        .contact-info .contact-item .value.highlight { color: #8ab4ff; }
+        .contact-info .contact-item.full { grid-column: 1/-1; justify-content: center; color: #8ab4ff; font-weight: 600; }
+        .test-steps {
+            background: #0d0f14;
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-size: 13px;
+            line-height: 1.9;
+            color: #d0d8e8;
+        }
+        .test-steps .step { padding: 2px 0; }
+        .test-steps .step .num { font-weight: 700; color: #8ab4ff; margin-right: 4px; }
+        .test-steps .step .highlight-text { color: #8ab4ff; font-weight: 600; }
+        .test-steps .step .code { background: #1a1f2a; padding: 0 6px; border-radius: 4px; font-family: monospace; font-size: 12px; color: #d0d8e8; }
+        .tester-section { margin-top: 4px; }
+        .tester-card {
+            background: #0d0f14;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 10px;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        .tester-card .tester-name {
+            font-weight: 700;
+            font-size: 14px;
+            color: #d0d8e8;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .tester-card .tester-name .badge {
+            font-size: 10px;
+            padding: 1px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+        .tester-card .tester-name .badge.level1 { background: linear-gradient(135deg, #ffd700, #f5a623); color: #3d2b00; }
+        .tester-card .tester-name .badge.level2 { background: linear-gradient(135deg, #4a8cff, #0066cc); color: white; }
+        .tester-card .tester-desc { font-size: 12px; color: #8899bb; margin-top: 4px; line-height: 1.6; }
+
+        .rating-box { background: #0d0f14; border-radius: 8px; padding: 12px 14px; }
+        .rating-mode-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 14px;
+            justify-content: center;
+        }
+        .rating-mode-selector .mode-btn {
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            background: #1a1f2a;
+            color: #8899bb;
+            border: 1px solid rgba(255,255,255,0.06);
+            cursor: pointer;
+            transition: 0.15s;
+        }
+        .rating-mode-selector .mode-btn.active {
+            background: linear-gradient(135deg, #ffd700, #f5a623);
+            color: #3d2b00;
+            border-color: #ffd700;
+        }
+        .rating-mode-selector .mode-btn:hover:not(.active) {
+            background: #2a3448;
+            color: #e8edf5;
+        }
+        .rating-group { margin-bottom: 12px; }
+        .rating-group .group-title {
+            font-weight: 600;
+            font-size: 14px;
+            color: #8ab4ff;
+            margin-bottom: 4px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding-bottom: 4px;
+        }
+        .rating-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 4px 0;
+            font-size: 13px;
+            color: #d0d8e8;
+        }
+        .rating-item .stars { display: flex; gap: 6px; }
+        .rating-item .stars span {
+            cursor: pointer;
+            font-size: 18px;
+            color: #4a4a6a;
+            transition: 0.15s;
+            user-select: none;
+        }
+        .rating-item .stars span:hover { transform: scale(1.2); }
+        .rating-item .stars span.active { color: #ffd700; }
+        .rating-result {
+            text-align: center;
+            padding: 8px;
+            background: #14171c;
+            border-radius: 8px;
+            margin-top: 8px;
+            font-weight: 600;
+            color: #8ab4ff;
+        }
+        .rating-level-map {
+            margin-top: 12px;
+            padding: 12px 14px;
+            background: #14171c;
+            border-radius: 8px;
+            font-size: 13px;
+            line-height: 1.9;
+            color: #d0d8e8;
+            text-align: center;
+        }
+        .rating-level-map .current-tier {
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffd700;
+        }
+        .rating-level-map .current-tier .sub {
+            font-size: 12px;
+            color: #8899bb;
+            font-weight: 500;
+            margin-left: 6px;
+        }
+        @media (max-width: 700px) {
+            body { padding: 14px; }
+            .section { padding: 18px; }
+            .contact-info { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="topbar">
+            <a href="index.html">← 返回首页</a>
+            <div class="title">关于 MCTierc</div>
+        </div>
+
+        <div class="section">
+            <h2>🧪 测试</h2>
+            <div class="test-steps">
+                <div class="contact-item full" style="display:flex;justify-content:center;color:#8ab4ff;font-weight:600;margin-bottom:6px;">总榜中蓝色标签为该模式测试官</div>
+                <div class="step"><span class="num">1.</span> 所有模式均在<span class="highlight-text">房间</span>测试，约定测试时间</div>
+                <div class="step"><span class="num">2.</span> 进入房间，加入测试官队伍</div>
+                <div class="step"><span class="num">3.</span> 面向测试官，ESC截图确认</div>
+                <div class="step"><span class="num">4.</span> 接受单挑，开始测试</div>
+                <div class="step"><span class="num">5.</span> 测到认定级别为准</div>
+                <div class="step"><span class="num">6.</span> ESC截图发给我确认</div>
+                <div class="step"><span class="num">7.</span> 成绩上传需一定时间</div>
+            </div>
+            <div style="margin-top:14px;">
+                <div class="contact-info">
+                    <div class="contact-item"><span class="label">抖音名</span><span class="value highlight">MC_海连豹</span></div>
+                    <div class="contact-item"><span class="label">抖音号</span><span class="value">sealll223266</span></div>
+                    <div class="contact-item full">抖音主页进群</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📊 评分</h2>
+            <p>每个游戏模式将玩家分为五个等级，分为高档和低档。你的分级会获得积分，而积分决定你在整体排行榜上的位置。</p>
+            <div class="score-rules" id="scoreRulesContainer"></div>
+            <p style="margin-top:16px;">你的称号会根据你在每个游戏模式中的总积分来决定。</p>
+            <div class="score-rules" id="titleRulesContainer"></div>
+            <div class="tester-section" style="margin-top:16px;">
+                <div class="tester-card">
+                    <div class="tester-name">
+                        <span>一级测试员</span>
+                        <span class="badge level1">表现出色</span>
+                    </div>
+                    <div class="tester-desc">可测评全范围等级（HT1 到 LT5），具备最高评测权限</div>
+                </div>
+                <div class="tester-card">
+                    <div class="tester-name">
+                        <span>二级测试员</span>
+                        <span class="badge level2">通过申核</span>
+                    </div>
+                    <div class="tester-desc">需通过审核获得：<strong>5局3胜</strong>，且被测人全程录屏。通过后可获得 <strong>测试员+1</strong> 模式等级</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>⭐ 模式评分</h2>
+            <p>选择模式后对各项表现打星，每项最高 5 星，可点到 0 星。总评分满分为 30 分。</p>
+            <div class="rating-box">
+                <div class="rating-mode-selector" id="ratingModeSelector"></div>
+                <div id="ratingContent"></div>
+                <div class="rating-level-map">
+                    当前总评分 <span id="currentScoreDisplay">0</span> / 30，对应等级：
+                    <div class="current-tier" id="currentTierDisplay">LT5 <span class="sub">(0 – 3 分)</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const DATA = window.__DATA;
+            if (!DATA) return;
+
+            const MODES = DATA.MODES;
+            const RATING_CONFIG = DATA.RATING_CONFIG;
+            const COMMON_RATINGS = DATA.COMMON_RATINGS;
+            const MODE_ICONS = DATA.MODE_ICONS;
+            const STORAGE_KEY = 'mctierc_ratings';
+            let ratingData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+            let currentRatingMode = MODES[0] || 'Sword';
+            let ratingScores = {};
+
+            // 每 3 分一档，共 10 档，满分 30
+            const TIER_MAP = [
+                { min: 0,  max: 3,  tier: 'LT5', label: '0 – 3 分' },
+                { min: 3,  max: 6,  tier: 'HT5', label: '3 – 6 分' },
+                { min: 6,  max: 9,  tier: 'LT4', label: '6 – 9 分' },
+                { min: 9,  max: 12, tier: 'HT4', label: '9 – 12 分' },
+                { min: 12, max: 15, tier: 'LT3', label: '12 – 15 分' },
+                { min: 15, max: 18, tier: 'HT3', label: '15 – 18 分' },
+                { min: 18, max: 21, tier: 'LT2', label: '18 – 21 分' },
+                { min: 21, max: 24, tier: 'HT2', label: '21 – 24 分' },
+                { min: 24, max: 27, tier: 'LT1', label: '24 – 27 分' },
+                { min: 27, max: 30, tier: 'HT1', label: '27 – 30 分' }
+            ];
+
+            function getTierByScore(score) {
+                for (let i = TIER_MAP.length - 1; i >= 0; i--) {
+                    const t = TIER_MAP[i];
+                    if (score >= t.min) return t;
+                }
+                return TIER_MAP[0];
+            }
+
+            function renderScoreRules() {
+                const container = document.getElementById('scoreRulesContainer');
+                container.innerHTML = '';
+                const layers = [
+                    ['HT1', 60, 'LT1', 45],
+                    ['HT2', 30, 'LT2', 20],
+                    ['HT3', 10, 'LT3', 6],
+                    ['HT4', 4, 'LT4', 3],
+                    ['HT5', 2, 'LT5', 1]
+                ];
+                layers.forEach(([h, hs, l, ls]) => {
+                    const div = document.createElement('div');
+                    div.className = 'rule-item';
+                    div.innerHTML = `<span class="level">${h} · ${hs}分</span><span class="level">${l} · ${ls}分</span>`;
+                    container.appendChild(div);
+                });
+            }
+
+            function renderTitleRules() {
+                const container = document.getElementById('titleRulesContainer');
+                container.innerHTML = '';
+                const titles = [
+                    ['Combat Grandmaster', 'title-grandmaster', '400+分'],
+                    ['Combat Master', 'title-master', '250+分'],
+                    ['Combat Ace', 'title-ace', '100+分'],
+                    ['Combat Specialist', 'title-specialist', '50+分'],
+                    ['Combat Cadet', 'title-cadet', '20+分'],
+                    ['Combat Novice', 'title-novice', '10+分'],
+                    ['Rookie', 'title-rookie', '低于10分']
+                ];
+                titles.forEach(([name, cls, score]) => {
+                    const div = document.createElement('div');
+                    div.className = 'rule-item';
+                    div.style.alignItems = 'center';
+                    div.innerHTML = `<span class="title-badge ${cls}">${name}</span><span style="color:#8ab4ff;font-weight:600;">${score}</span>`;
+                    container.appendChild(div);
+                });
+            }
+
+            function initRatingScores(mode) {
+                const config = RATING_CONFIG[mode];
+                if (!config) return {};
+                const allItems = [...COMMON_RATINGS, ...config.special];
+                if (!ratingScores[mode]) {
+                    ratingScores[mode] = {};
+                    allItems.forEach(item => {
+                        const saved = ratingData[mode];
+                        ratingScores[mode][item] = (saved && saved[item] !== undefined) ? saved[item] : 0;
+                    });
+                }
+                allItems.forEach(item => {
+                    if (ratingScores[mode][item] === undefined) ratingScores[mode][item] = 0;
+                });
+                return ratingScores[mode];
+            }
+
+            function renderStars(item, val) {
+                let out = `<div class="stars" data-item="${item}">`;
+                for (let s = 1; s <= 5; s++) {
+                    out += `<span class="${s <= val ? 'active' : ''}" data-value="${s}">★</span>`;
+                }
+                out += `</div>`;
+                return out;
+            }
+
+            function renderRatingUI() {
+                const container = document.getElementById('ratingContent');
+                const mode = currentRatingMode;
+                const config = RATING_CONFIG[mode];
+                if (!config) { container.innerHTML = ''; return; }
+                const scores = initRatingScores(mode);
+
+                let html = '';
+                html += `<div class="rating-group"><div class="group-title">公有评分</div>`;
+                COMMON_RATINGS.forEach(item => {
+                    const val = scores[item] || 0;
+                    html += `<div class="rating-item"><span>${item}</span>${renderStars(item, val)}</div>`;
+                });
+                html += `</div>`;
+
+                html += `<div class="rating-group"><div class="group-title">特别评分 (${mode})</div>`;
+                config.special.forEach(item => {
+                    const val = scores[item] || 0;
+                    html += `<div class="rating-item"><span>${item}</span>${renderStars(item, val)}</div>`;
+                });
+                html += `</div>`;
+
+                let total = 0;
+                const allItems = [...COMMON_RATINGS, ...config.special];
+                allItems.forEach(item => total += scores[item] || 0);
+
+                html += `<div class="rating-result">总评分: ${total} / ${allItems.length * 5}</div>`;
+                container.innerHTML = html;
+
+                container.querySelectorAll('.stars').forEach(starGroup => {
+                    starGroup.querySelectorAll('span').forEach(star => {
+                        star.addEventListener('click', function() {
+                            const item = starGroup.dataset.item;
+                            const value = parseInt(this.dataset.value);
+                            const modeScores = ratingScores[currentRatingMode];
+                            if (modeScores) {
+                                const current = modeScores[item] || 0;
+                                modeScores[item] = (current === value) ? 0 : value;
+                                starGroup.querySelectorAll('span').forEach(s => {
+                                    s.classList.toggle('active', parseInt(s.dataset.value) <= modeScores[item]);
+                                });
+                                updateRatingTotal();
+                            }
+                        });
+                    });
+                });
+
+                updateTierDisplay(total);
+            }
+
+            function updateRatingTotal() {
+                const mode = currentRatingMode;
+                const config = RATING_CONFIG[mode];
+                if (!config) return;
+                const scores = ratingScores[mode];
+                if (!scores) return;
+                let total = 0;
+                const allItems = [...COMMON_RATINGS, ...config.special];
+                allItems.forEach(item => total += scores[item] || 0);
+                const resultDiv = document.querySelector('.rating-result');
+                if (resultDiv) resultDiv.textContent = `总评分: ${total} / ${allItems.length * 5}`;
+                ratingData[mode] = { ...scores };
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(ratingData));
+                updateTierDisplay(total);
+            }
+
+            function updateTierDisplay(total) {
+                const t = getTierByScore(total);
+                const scoreEl = document.getElementById('currentScoreDisplay');
+                const tierEl = document.getElementById('currentTierDisplay');
+                if (scoreEl) scoreEl.textContent = total;
+                if (tierEl) tierEl.innerHTML = `${t.tier} <span class="sub">(${t.label})</span>`;
+            }
+
+            function initRatingModal() {
+                const selector = document.getElementById('ratingModeSelector');
+                selector.innerHTML = '';
+                MODES.forEach(mode => {
+                    const btn = document.createElement('button');
+                    btn.className = 'mode-btn' + (mode === currentRatingMode ? ' active' : '');
+                    const icon = MODE_ICONS[mode] || '';
+                    btn.innerHTML = icon ? `<img src="${icon}" style="width:14px;height:14px;object-fit:contain;vertical-align:middle;margin-right:4px;" /> ${mode}` : mode;
+                    btn.addEventListener('click', function() {
+                        currentRatingMode = mode;
+                        document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+                        renderRatingUI();
+                    });
+                    selector.appendChild(btn);
+                });
+                renderRatingUI();
+            }
+
+            renderScoreRules();
+            renderTitleRules();
+            initRatingModal();
+        })();
+    </script>
+</body>
+</html>
